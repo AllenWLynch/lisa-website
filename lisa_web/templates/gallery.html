@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<style>
+    td, th {
+        padding: 3px;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{{ url_for('.static', filename='d3.v4.min.js') }}"></script>
+<script src="http://lisa.cistrome.org/static/jquery-1.12.4.js"></script>
+<script src="http://lisa.cistrome.org/static/popper.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+$(document).ready( function () {
+
+
+    d3.json("{{ url_for('get_gallery_table', species = species) }}", function(error, data){
+
+        var cell = function make_cell_html(d) {
+                if (d.value.link != null) {
+                    return "<a href=" + d.value.link + ">" + d.value.text + "</a>"
+                } else {
+                    return d.value.text
+                }
+            };
+
+        var columns = ['Factor Perturbed', 'Organism', 'Cell Type', 'Perturbation Type', 'GEO ID', 
+            'Geneset 1', 'Geneset 2', 'Results'];
+
+        var table = d3.select("#gallery-table").append("table")
+                .attr("class", "table-hover table-striped table-bordered myTable")
+            thead = table.append("thead"),
+            tbody = table.append("tbody").attr("class", "tbody");
+        
+         // append the header row
+        thead.append("tr")
+            .selectAll("th")
+            .data(columns)
+            .enter()
+            .append("th")
+            .text(function(column) { return column; });
+
+        // create a row for each object in the data
+        var rows = tbody.selectAll("tr")
+            .data(data)
+            .enter()
+            .append("tr");
+
+        // create a cell in each row for each column
+        var cells = rows.selectAll("td")
+            .data(function(row) {
+                return columns.map(function(column) {
+                    return {column: column, value: row[column]};
+                });
+            })
+            .enter()
+            .append("td")
+            .html(function(d) { return cell(d); });
+
+        $('.myTable').ready(function() {
+            $('.myTable').DataTable({
+            "order": [],
+            retrieve: true,
+            paging: true,
+            dom: 'Bfrtip'
+            });
+        });
+
+    });
+});
+ </script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="row body2">
+    <div class="col-sm-12">
+       <div class="jumbotron jumbotron-fluid shadow-sm">
+       <div class="container">
+          <h1 class="display-4">Gallery of LISA benchmark datasets</h1>
+       </div>
+       </div>
+   </div>
+ </div>
+
+<div class="container body" id="gallery-table"></div>
+{% endblock %}

@@ -1,0 +1,178 @@
+.fixed-top {
+    background-color: #2B3B61;
+    color: #FFFFFF;
+    padding-top: 15px;
+    padding-bottom: 19px;
+    height: 50px;
+}
+
+.fixed-bottom {
+    background-color: #2B3B61;
+    color: #FFFFFF;
+    height: 52px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.nav-a {
+    color: #FFFFFF;
+    text-decoration: blink;
+    background-color: transparent;
+}
+
+* {
+    margin: 0;
+}
+
+.body3 {
+    padding-top: 32px;
+    padding-bottom: 30px;
+    font-family: lato, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    background-color: #fff;
+}
+
+.body2 {
+    padding-top: 35px;
+    padding-bottom: 30px;
+    font-family: lato, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    background-color: #fff;
+}
+
+.body {
+    padding-top: 0px;
+    padding-bottom: 120px;
+    margin-bottom: 120px;
+    font-family: lato, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    height: 690px;
+    background-color: #fff;
+}
+
+#navbar-example {
+ //   position: relative;
+    z-index: 998;
+    position: fixed;
+    top: 248px;
+    margin-left: 35px;
+    width: 220px;
+    left: 101px;
+}
+
+.progress {
+    width: 100%;
+    text-align: center;
+}
+
+.tf1,
+.tf2,
+.tf0,
+.tf,
+{
+    height: 480px;
+    overflow: auto;
+}
+
+#spyOnThis {
+ height: 100%;
+ width: 100%;
+ position: relative;
+ overflow-y: scroll;
+}
+
+.tfl
+{
+    height: 600px;
+    width: 100%;
+}
+
+.footer,
+.title
+{
+  font-weight: bold;
+  color: #444;
+  text-align:center;
+  background-color: #eee;
+  border-top: 2px solid #444;
+  border-bottom: 2px solid #444;
+}
+
+.genes2 {
+  resize: none;
+  height: 113px; 
+}
+.genes {
+  resize: none;
+  height: 113px; 
+}
+
+/* /\* .sp { *\/ */
+/* /\*   margin: 12px 12px 12px 12px; *\/ */
+/* /\*   text-align: center; *\/ */
+/* /\* } *\/ */
+
+
+/* /\* .main_content { *\/ */
+/* /\*   border-bottom: 2px solid #444; *\/ */
+/* /\*   text-align: center; *\/ */
+/* /\* } *\/ */
+
+.run {
+    margin: 0px 24px 5px 2px;
+}
+
+/* .bd-example-modal-lg { */
+/*     width: 1000px; */
+/* } */
+
+td { vertical-align:middle; }
+td:hover {
+   cursor: pointer;
+}
+
+img {
+  opacity: 0.9;
+  filter: alpha(opacity=90); /* For IE8 and earlier */
+}
+
+.inspector_attrib_row {
+border-bottom: 1px #d6d6d6 solid;
+border-right: 1px #d6d6d6 solid
+}
+
+.circle-col {
+width: 12.5%;
+position: relative;
+float: left;
+}
+
+.circle {
+background: #A9A9A9;
+height: 23px;
+width: 23px;
+border-radius: 50%;
+margin: 0 auto;
+}
+
+div {
+    display: block;
+}
+
+.green {
+background-color: #27ae60;
+}
+
+.red {
+background-color: #c0392b;
+}
+
+.btn-align {
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    vertical-align: middle;
+
+}

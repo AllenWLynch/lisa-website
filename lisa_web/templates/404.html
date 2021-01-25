@@ -1,0 +1,64 @@
+{% block metas %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+{% endblock %}
+
+{% block title %}Lisa{% endblock %}
+
+{% block html_attribs %} lang="en"{% endblock %}
+
+{% block navbar %}
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a href="{{ url_for('submit_lisa') }}" class="navbar-brand">
+      <img src="{{ url_for('.static', filename = 'lisa_simpson.png') }}" height="55" width="40" alt="lisa">
+      <span></span>LISA
+    </a>
+    <div id="navbar-nav-scroll">
+      <ul class="navbar-nav bd-navbar-nav flex-row">
+        <li class="nav-item active">
+          <a class="nav-link nav-a" href="{{ url_for('submit_lisa') }}">HOME</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link nav-a" href="{{ url_for('get_github') }}">GitHub</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link nav-a" href="{{ url_for('get_gallery', species='hg38') }}">Hg38 Gallery</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link nav-a" href="{{ url_for('get_gallery', species='mm10') }}">Mm10 Gallery</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link nav-a" href="{{ url_for('get_stats') }}">Statistics</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link nav-a" href="{{ url_for('get_docs') }}">Documentation</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block styles %}
+
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.2.1/dt-1.10.16/datatables.min.css"/> -->
+<link rel="stylesheet" href="{{ url_for('.static', filename='font-awesome.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('.static', filename='custom.css') }}">
+
+<!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"> -->
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>
+
+<link rel="stylesheet" href="{{ url_for('.static', filename='lisa.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div style="text-align:center; margin-top:200px">
+    <img src="{{ url_for('.static', filename = 'lisa_404.png') }}" height="250px" alt="LISA" class="center">
+    <h4 style="margin-top:30px">404! Page Not Found</h4>
+</div>
+{% endblock %}

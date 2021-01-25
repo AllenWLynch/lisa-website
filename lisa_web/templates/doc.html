@@ -1,0 +1,347 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/fixes.html" as fixes %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block head %}{{super()}}{{fixes.ie8()}}{% endblock %}
+{% block html_attribs %} lang="en"{% endblock %}
+{% block metas %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% endblock %}
+
+{% block title %}Lisa{% endblock %}
+
+{% block navbar %}
+
+<style>
+table, th, td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 10px;
+}
+</style>
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a href="/" class="navbar-brand">
+      <img src="/static/lisa.jpg" height="55" width="40" alt="lisa">
+      <span></span>Lisa
+    </a>
+    <div id="navbar-nav-scroll">
+      <ul class="navbar-nav bd-navbar-nav flex-row">
+        <li class="nav-item active">
+          <a class="nav-link nav-a" href="http://lisa.cistrome.org/">HOME</a>
+        </li>
+
+        <li class="nav-item active">
+          <a class="nav-link nav-a" href="https://github.com/liulab-dfci/lisa">GitHub</a>
+        </li>
+
+        <li class="nav-item active">
+          <a class="nav-link nav-a" href="http://lisa.cistrome.org/new_gallery/new_gallery.html">Human Gallery</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link nav-a" href="http://lisa.cistrome.org/new_gallery_mm/new_gallery_mm.html">Mouse Gallery</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link nav-a" href="http://lisa.cistrome.org/stat">Statistics</a>
+        </li>
+
+        <li class="nav-item active">
+          <a class="nav-link nav-a" href="http://lisa.cistrome.org/doc">Documentation</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block styles %}
+<!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"> -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ url_for('.static', filename='lisa.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="d-none d-xl-block col-xl-2 bd-toc">
+<ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#item-0">Video tutorial</a></li>
+<li class="toc-entry toc-h2"><a href="#item-1">About</a></li>
+<li class="toc-entry toc-h2"><a href="#item-2">Online version</a></li>
+<ul>
+<li class="toc-entry toc-h3"><a href="#item-2-1">Online usage</a></li>
+<li class="toc-entry toc-h3"><a href="#item-2-2">Online output</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#item-3">Local command version</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#item-3-1">Local installation</a></li>
+<li class="toc-entry toc-h3"><a href="#item-3-2">Local usage</a></li>
+<li class="toc-entry toc-h3"><a href="#item-3-3">Local output</a></li>
+</ul>
+<li class="toc-entry toc-h2"><a href="#item-4">FAQ</a></li>
+</li>
+</ul>
+</div>
+
+<div class="col-sm-8 body3">
+<div data-target="#navbar-example" data-offset="0">
+  <h1 id="item-0">Lisa</h2>
+  <h4 id="item-0">Video tutorial</h4>
+  <iframe width="640" height="480"
+		      src="https://www.youtube.com/embed/ECflrQuoc0c" frameborder="0" allowfullscreen>
+  </iframe>
+  <br>
+  <h2 id="item-1">About</h2>
+  <p class="just">Transcriptional regulators (TRs), including transcription factors and chromatin regulators, play central role in gene regulation, and are essential in many biological processes. To rank TRs given geneset, we develop a computational biology framework, Lisa, to evaluate and rank TRs effect by integrative modelling of chromatin landscapes and cistromes from Cistrome Data Browser (<a href="http://cistrome.org/db/">CistromeDB</a>). To run Lisa online application or local command line, the only thing you need is the differential gene set derived from differential gene expression analysis of microarray and RNA-seq. Then you will be able to leverage the power of the most comprehensive TR ChIP-seq, DNase-seq, H3K27ac ChIP-seq database to discover the underlying regulatory TRs.</p>
+  </p>
+  </hr>
+
+  <p class="just">Lisa combines two models, epigenetics landscape <i>insilico</i> subtraction model and the cistrome regulatory potential model. The first model integrates epigenetics landscape with cistromes through the <i>insilico</i> deletion strategy. First, the model will build a chromatin landscape model using the input gene set based on the comprehensive database of DNase-seq, or H3K27ac ChIP-seq. The model selects a subset of the cell type specific chromatin landscape. Then, the model will probe the effect of TRs on a gene in these landscapes by simulating deletions of chromatin signals on TR binding sites. These binding sites can come from the ChIP-seq experiment-derived data in CistromeDB, or the motif scan, or imputed TR binding sites from DREAM challenge. The second model uses only cistromes to model the TR regulatory potential on each gene. Finally, Lisa would assign every binding site profile(ChIP-seq data, motif hit profile or imputed TF binding site) a score showing essentiality of the set of transcriptional regulator binding sites by comparing the effect between all the input genes and a fixed/user-customized background genes, and combined all the statistics from both models for each TR.</p>
+  </hr>
+</div><br>
+
+<h2 id="item-4">FAQ</h2>
+    <h6>How many datasets are there?</h6>
+    <p>The 1st version of CistromeDB is incorporated, the dataset statistics is as the table below, NOTE: the data used for current Lisa online is updated to CistromeDB (201801). </p>
+    <div align="center">Table 1. Chromatin profile data and TF/CR ChIP-seq dataset</div>
+    <table border="0" class="table">
+    <colgroup>
+    <col width="34%">
+    <col width="34%">
+    <col width="31%">
+    </colgroup>
+    <thead valign="bottom">
+    <tr class="row-odd"><th class="head">Category</th>
+    <th class="head">Human</th>
+    <th class="head">Mouse</th>
+    </tr>
+    </thead>
+    <tbody valign="top">
+    <tr class="row-even"><td>DNase-seq</td>
+    <td>1,106</td>
+    <td>361</td>
+    </tr>
+    <tr class="row-odd"><td>H3K27ac ChIP-seq</td>
+    <td>1,544</td>
+    <td>1,031</td>
+    </tr>
+    <!--
+    <tr class="row-even"><td>H3K27me3</td>
+    <td>842</td>
+    <td>932</td>
+    </tr>
+    <tr class="row-odd"><td>H3K4me3</td>
+    <td>1,432</td>
+    <td>1,032</td>
+    </tr>
+    <tr class="row-even"><td>H3K4me1</td>
+    <td>726</td>
+    <td>590</td>
+    </tr>
+    -->
+    <tr class="row-odd"><td>TF and CR ChIP-seq</td>
+    <td>8,471</td>
+    <td>4,363</td>
+    </tr>
+    <!--
+    <tr class="row-even"><td>Total</td>
+    <td>12,428</td>
+    <td>8,307</td>
+    </tr>
+    -->
+    </tbody>
+    </table>
+
+    <hr>
+
+    <h6>What if we swap the gene list from input to background genes?</h6>
+    We recommend the user not to swap the gene lists (swapped Lisa run). Since the gene labels are changed as well, this would render symmetric changes of the sign of model coefficients and deletion-RP, thus this makes the statistics test unchanged. However, the TF rank from the peak-RP method will change to be negatively correlated with the un-swapped running since the peak-RP for a same gene is not affected by gene list swap. In total, the combined p value from both cauchy and fisher combination test will be affected unexpectedly.
+  <br><br>
+  <h2 id="item-2">Online version</h2>
+  <h5 id="item-2-1">Online Usage</h5>
+  <p class="just">The user interface and options for the online LISA platform is shown below. First, the user must select their species, then the method of factor binding to analyze. ChIP-seq data is the primary and most powerful choice, as ChIP-seq data represents the ground-truth of factor binding locations. For TFs that are not well-represented in our ChIP-seq database, you may also opt to use motifs to represent binding locations. 
+    Next, the user may input one or two gene lists representing genes differential for some condition. A common usage pattern is to supply differentially upregulated genes as list 1 and downregulated genes as list 2. Both genes will be compared against the genomic background, and figure comparing TF rankings generated. 
+    Lastly, the user may supply their own background gene set for comparison against their primary gene sets, in the case one has some prior knowledge on the relationship between their genes-of-interest.
+    </hr>
+
+  <div class="figure1" id="id1" align="center">
+  <img src="http://lisa.cistrome.org/static/Figure1.png" height="550" width="430">
+  </div>
+  <div align="center">Figure 1. Lisa input interface</div>
+  </hr>
+
+  <h5 id="item-2-2">Online output</h5>
+  <p class="just">With two gene sets input, the MYC knockdown demo outputs <a href="http://lisa.cistrome.org/download/MYC_Lisa_2019_04_30_0017080.114__hg38_result.html">the page</a>, which lists the following results as in Figure 2:</p>
+  <div class="figure2" align="center">
+  <img alt="_images/2.png" src="http://lisa.cistrome.org/static/Figure2.png" height="340" width="420">
+  <div align="center">Figure 2. Lisa result list of MYC knockdown gene set</div>
+  </div>
+
+  <li>A pairwise scatterplot for comparison of the two gene set TF rankings with combined p-values based on TF ChIP-seq(Figure 3).</li>
+  <div class="figure3" align="center">
+  <img alt="_images/3.png" src="http://lisa.cistrome.org/static/Figure3.png" height="500" width="650">
+  <div align="center">Figure 3. Lisa result based on TF ChIP-seq</div>
+  </div>
+
+  <li>A pairwise scatterplot for comparison of the two gene set based on TF motif (Figure 4). </li>
+  <div class="figure4" align="center">
+  <img alt="_images/4.png" src="http://lisa.cistrome.org/static/Figure4.png" height="500" width="650">
+  <div align="center">Figure 4. Lisa TF ranking based on motif</div>
+  </div>
+
+  <p class="just">NOTE: These two figures can be saved to local disk, The x axis and y axis shows the -log10(p-value) of the TF ranking significance for either gene set. Once user moves mouse over the points, the corresponding TF ChIP-seq sample will be shown by Cistrome ID and TF name, user can see details information about the sample by searching CistromeDB with Cistrome ID.</p>
+
+  <li>The TF ranking table is computed by combining Peak-RP method, H3K27ac, DNase-seq in silico deletion of TF ChIP-seq peaks(Figure 5). </li>
+  <div class="figure5" align="center">
+  <img alt="_images/5.png" src="http://lisa.cistrome.org/static/Figure5.png" height="400" width="760">
+  </div>
+  <div align="center">Figure 5. Lisa TF ranking for down-regulated gene set based on ChIP-seq</div>
+
+  <p class="just">NOTE: Click on each of the p-value for TF ranking, the Cistrome dataset link will be shown below (Figure 6).</p>
+  <div class="figure6" align="center">
+  <img alt="_images/6.png" src="http://lisa.cistrome.org/static/Figure6.png" height="400" width="760">
+  </div>
+  <div align="center">Figure 6. TF ranking linked to CistromeDB</div>
+
+  <li>The TF ranking table is computed by combining H3K27ac and DNase-seq in silico deletion methods (Figure 7).</li>
+  <div class="figure7" align="center">
+  <img alt="_images/7.png" src="http://lisa.cistrome.org/static/Figure7.png" height="400" width="760">
+  </div>
+  <div align="center">Figure 7. TF ranking based on chromatin profile knockout of motif hit site</div>
+  <p class="just">NOTE: These tables above can be exported to csv or pdf to local disk. </p>
+
+  <li>Clicking on the 'Download all results', all the intermediate and final results of Lisa will be downloaded as a zip file. Uncompressing the zip files, all the files are named by using job name and timestamp as the prefix, the result list are shown in the <a href="http://lisa.cistrome.org/doc#item-2-3">table</a>. Except for the scatterplot, another special output from the online version of Lisa is the gene set enrichment view on WashU genome browser, user can open the links in the MYC_Lisa*browser_link.txt in the downloaded files. We randomly picked arbitrarily 20 genes from the differential gene set to generate the genome tracks for the top ranked TF ChIP-seq, selected chromatin profile ChIP-seq for both gene set 1 (e.g. up regulated) and gene set 2 (e.g. down regulated) gene set (Figure 8).</li>
+  </hr>
+
+  <div class="figure1" align="center">
+  <img alt="_images/8.png" src="http://lisa.cistrome.org/static/Figure8.png" height="400" width="760">
+  </div>
+  <div align="center">Figure 8. gene set enrichment view mode on Wash U genome browser</div>
+
+  <h2 id="output-file-formats">Output File Formats</h2><br>
+  <h4 id="tabular-results-chip-seq-mode">Tabular Results - ChIP-seq mode</h4>
+  <table>
+  <thead>
+  <tr>
+  <th>Column Name</th>
+  <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>Rank</td>
+  <td>Ranking of factor influence with respect to &quot;summary_p_value&quot;</td>
+  </tr>
+  <tr>
+  <td>sample_id</td>
+  <td>Cistrome.org sample ID</td>
+  </tr>
+  <tr>
+  <td>factor</td>
+  <td>Factor gene symbol</td>
+  </tr>
+  <tr>
+  <td>cell_line</td>
+  <td>cell line of ChIP-seq sample</td>
+  </tr>
+  <tr>
+  <td>cell_type</td>
+  <td>cell type</td>
+  </tr>
+  <tr>
+  <td>tissue</td>
+  <td>tissue type</td>
+  </tr>
+  <tr>
+  <td>DNase_p_value</td>
+  <td>TF influence assessed through DNase accessibility</td>
+  </tr>
+  <tr>
+  <td>ChIP-seq_p_value</td>
+  <td>TF influence through direct binding locality enrichment</td>
+  </tr>
+  <tr>
+  <td>H3K27ac_p_value</td>
+  <td>TF influence through H3K27ac accessibility</td>
+  </tr>
+  <tr>
+  <td>DNase_factor_accessibility_z_score</td>
+  <td>Z-normalized score of accessibility of chromatin around the assessed factor&#39;s TSS. This may indicate if a particular factor scores highly for influence, but is not expressed in the accessibility samples used to assess that influence.</td>
+  </tr>
+  <tr>
+  <td>H3K27ac_factor_accessibility_z_score</td>
+  <td>same as above</td>
+  </tr>
+  <tr>
+  <td>summary_p_value</td>
+  <td>Cauchy combined p-value aggregating results of all tests conducted. This is the best indicator of overall factor influence on your genes of interest.</td>
+  </tr>
+  </tbody>
+  </table><br>
+  <h4 id="unstructured-results-use-save_metadata-option-to-keep-">Unstructured results (use --save_metadata option to keep)</h4>
+  <p>Contains various calculations used to conduct LISA's tests. Select keys shown below:
+    <table>
+    <thead>
+    <tr>
+    <th>Key</th>
+    <th>Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>query_symbols</td>
+    <td>User-provided symbols representing genes-of-interest</td>
+    </tr>
+    <tr>
+    <td>background_symbols</td>
+    <td>Background genes provided by user or selected by LISA</td>
+    </tr>
+    <tr>
+    <td>DNase/H3K27ac -&gt; chromatin_model -&gt; coefs</td>
+    <td>Weights assigned to the contribution of each accessibility dataset to the LISA test</td>
+    </tr>
+    <tr>
+    <td>DNase/H3K27ac -&gt; selected_datasets</td>
+    <td>Selected accessibility datasets&#39; metadata and attributes</td>
+    </tr>
+    </tbody>
+    </table><br>
+  <p>The metadata and weights of accessibility datasets used in the LISA test may be important for performing your analysis of the results, and can show which tissues are highly accessibility around your genes of interest.</p>
+
+  </div>
+</div>
+
+<nav class="navbar fixed-bottom navbar-dark">
+  <div class="container">
+    <a href="/" class="navbar-brand">
+      <img src="http://cistrome.org/db/cistrome_logo.png" height="46" width="58">
+    </a>
+    <ul class="navbar-nav bd-navbar-nav flex-row">
+    <li class="nav-item active">
+     <span>Copyright @2020 Liu lab</span>
+    </li>
+    </ul>
+  </div>
+</nav>
+{% endblock %}
+
+
+{% block scripts %}
+<!-- {{ super() }} -->
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+<!-- <script src="{{ url_for('.static', filename='jquery-3.2.1.min.js') }}"></script> -->
+<!-- <script src="{{ url_for('.static', filename='popper.min.js') }}"></script> -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+<!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script> -->
+<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+<script src="{{ url_for('.static', filename='lisa.js') }}" type="text/javascript"></script>
+<!--<script>
+$('#spyOnThis').scrollspy();
+</script>
+-->
+{% endblock %}
+

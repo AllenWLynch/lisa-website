@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="{{ url_for('.static', filename='lisa.js') }}" type="text/javascript"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-149860171-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-149860171-1');
+</script>
+
+{% endblock %}
+
+{% block content %}
+<div class="container body" style="margin-top:100px">
+  <div class="row">
+    <div class="col-sm-6 h-100 d-inline-block">
+      <div class="card shadow" style="box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2);">
+        <div class="card-header">
+          <h4>Overview</h4>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">epigenetic <b>L</b>andscape <b>I</b>n <b>S</b>ilico deletion <b>A</b>nalysis</h5>
+          <p class="card-text">
+    LISA is a statistical test that finds the most influential Transcription Factors related to a set of genes. We leverage integrative modeling of a comprehensive dataset of 100s of chromatin accessiblity samples and 1000s of ChIP experiments to make predictions. 
+    Particularly, LISA models how much the <i>cis</i>-regulatory elements around a gene are influenced by deleting elements associated with a TF (a process we call <i>insilico</i> deletion). 
+    To run Lisa, the only thing you need is the differential gene list from whatever biological process you are interested in! The gene set can be constituted of RefSeq ids or gene symbols. <br><br>
+    <font color="red">For users hoping to analyze >20 genesets, please use our <a href="https://github.com/liulab-dfci/lisa2">python/cmd line package</a></font>. <br><br>If you like the tool, please cite <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-1934-6">Qin Q, Fan J, Zheng R, Wan C, Mei S, Wu Q, et al. Inferring transcriptional regulators through integrative modeling of public chromatin accessibility and ChIP-seq data. Genome Biology;(2020)21:32</a>. 
+          </p>
+        </div>
+      </div>
+      <div class="card shadow" style="margin-top:33px; box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2);">
+        <div class="card-header">
+          <h4>Python/CLI Package</h4>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+    Want to discover which factors may be influential using <i>your own</i> epigenetic conditions? The LISA python package offers additional tests where
+    users may provide ATAC-seq/DNase peaks, H3K27ac profiles, etc. to increase LISA's devining power and answer more specific questions. 
+    Example use cases include:   
+          </p>
+          <ul>
+            <li>Analyzing regulation of DE genes from scRNA-seq clusters</li>
+            <li>Jointly querying integrated scRNA-seq and scATAC-seq data for influential TFs</li>
+            <li>Testing factor influence in epigenetic conditions not represented in our Cistrome database</li>
+          </ul>
+          <p>
+            All tests are available as a python module or command line program, and the package is regularly updated with new features and tests. 
+            Check out the <a href="https://github.com/liulab-dfci/lisa2">package</a> and the <a href="https://github.com/liulab-dfci/lisa2/blob/master/docs/user_guide.md">User Guide</a> for more.
+          </p>
+        </div>
+        <div class="card-footer text-muted">
+          Supported by Cistrome team
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 h-100 d-inline-block">
+      <div class="card shadow" style="box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2);">
+        <div class="card-header">
+          <h4>Web API</h4>
+        </div>
+    <div class="card-body">
+    <form action="{{ url_for('submit_lisa') }}" method="post">
+          {{ form.csrf_token() }} {{ wtf.form_errors(form, hiddens='only') }}
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>{{form.species.label}}</label>
+              {{form.species(class="form-control-sm form-control")}}
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+                <label>{{form.method.label}}</label>
+                {{form.method(class="form-control-sm form-control")}}
+            </div>
+          </div>
+
+          <div class="form-row">
+          <div class="form-group col-md-6">
+              <label>Gene Set 1</label>
+              {{form.labels(class="form-control", placeholder="gene set 1 label")}}
+              {{form.genes(class="form-control genes", placeholder="Input gene set with between 20 and 500 genes.")}}
+          </div>
+          <div class="form-group col-md-6">
+              <label>Gene Set 2 ( optional )</label>
+              {{form.labels2(class="form-control", placeholder="gene set 2 label")}}
+              {{form.genes2(class="form-control genes2", placeholder="Comparison gene set. User may supply upregulated genes as gene set 1, and downregulated genes as gene set 2.")}}
+          </div>
+          </div>
+
+          <div class="panel-group" id="accordion">
+          <div class="panel panel-default">
+          <div class="panel-heading">
+              <h6 class="panel-title">
+                  <a class="btn btn-secondary dropdown-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Supply Background Genes
+                  </a>
+              </h6>
+          </div>
+
+          <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="panel-body">
+        
+          <div class="form-row">
+          <div class="form-group col-md-12">
+              <label>Background Gene Set (optional)</label>
+              {{form.background(class="form-control genes2", placeholder="user-provided background gene set. Must contain more unique and non-overlapping genes than input genesets.")}}
+          </div>
+          </div>
+          </div>
+          </div>
+          </div><br>
+
+          <div class="form-row">
+          <div class="form-group col-md-6">
+            {{form.name(class="form-control", placeholder="Job Name")}}
+          </div>
+          </div>
+    
+          <div class="form-row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Run</button>
+          <span style="display: inline-block;" class="btn-align">{{ message }}</span>
+      </div>
+            <div class="col-md-10">
+      </div>
+        <!-- {% for message in get_flashed_messages() %} -->
+          </div>
+        <!-- {% endfor %} -->
+    </form>
+    </div>
+  </div>
+  </div>
+</div>
+</div>
+{% endblock %}

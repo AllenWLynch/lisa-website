@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/fixes.html" as fixes %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+<head>
+    {% block title %}LISA{% endblock %}
+</head>
+{% block metas %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('.static', filename='font-awesome.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('.static', filename='custom.css') }}">
+
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>
+
+<link rel="stylesheet" href="{{ url_for('.static', filename='lisa.css') }}">
+{% endblock %}
+
+{% block style %}{% endblock %}
+
+{% block scripts %}{% endblock %}
+
+<body>
+
+    {% block navbar %}
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a href="{{ url_for('submit_lisa') }}" class="navbar-brand">
+            <img src="{{ url_for('.static', filename = 'lisa_simpson.png') }}" height="55" width="40" alt="lisa">
+            <span></span>LISA
+            </a>
+            <div id="navbar-nav-scroll">
+                <ul class="navbar-nav bd-navbar-nav flex-row">
+                    <li class="nav-item active">
+                        <a class="nav-link nav-a" href="{{ url_for('submit_lisa') }}">HOME</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link nav-a" href="{{ url_for('get_github') }}">GitHub</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link nav-a" href="{{ url_for('get_gallery', species='hg38') }}">Hg38 Gallery</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link nav-a" href="{{ url_for('get_gallery', species='mm10') }}">Mm10 Gallery</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link nav-a" href="{{ url_for('get_stats') }}">Statistics</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link nav-a" href="{{ url_for('get_docs') }}">Documentation</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navbar fixed-bottom navbar-dark">
+        <div class="container-fluid">
+            <a href="/" class="navbar-brand">
+            <img src="http://cistrome.org/db/cistrome_logo.png" height="46" width="58">
+            </a>
+            <ul class="navbar-nav bd-navbar-nav flex-row">
+            <li class="nav-item active">
+            <span>Copyright @2019 Liu lab</span>
+            </li>
+            </ul>
+        </div>
+    </nav>
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>
