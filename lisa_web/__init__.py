@@ -477,4 +477,11 @@ def get_file(task_id, filename):
 def download_results(task_id):
     return send_from_directory(os.path.join(CONFIG.get('paths','root'), CONFIG.get('paths','download')), filename = task_id + '.zip')
 
+@app.route('/download/<path:filename>')
+def fetch_old_results(filename):
+    return send_from_directory(os.path.join(CONFIG.get('paths','root'), CONFIG.get('paths','download')), filename = filename)
+
 Bootstrap(app)
+
+if __name__ == "__main__":
+    app.run()
